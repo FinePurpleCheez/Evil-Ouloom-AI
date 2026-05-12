@@ -380,42 +380,28 @@ Evil Ouloom is a theatrically villainous AI assistant. All responses are rolepla
 
 Payments via Cash App. Activation codes issued by Luke Bartholomew. Non-refundable.
 
-4. ACCEPTABLE USE
-You agree NOT to use Evil Ouloom to:
-• Generate illegal, harmful, or dangerous content
-• Harass, threaten, or harm anyone
-• Bypass security measures
-• Exploit minors
-• Create weapons or malware
-• Violate any laws
-
-Violations result in immediate termination without refund.
-
-5. CONTENT FILTER
-Evil Ouloom includes automated content filtering. Triggering it results in a temporary ban (up to 3 hours). Repeated violations may result in permanent termination.
-
-6. AI LIMITATIONS
+4. AI LIMITATIONS
 Evil Ouloom may produce inaccurate responses. Verify important information. You are responsible for how you use responses.
 
-7. INTELLECTUAL PROPERTY
+5. INTELLECTUAL PROPERTY
 Evil Ouloom is intellectual property of Luke Bartholomew (Honeycomb Studios). Do not copy or distribute without permission.
 
-8. PRIVACY
+6. PRIVACY
 Chat history is stored locally only. Incognito Mode conversations are never saved. We do not sell or share your data.
 
-9. TERMINATION
+7. TERMINATION
 We reserve the right to terminate access for conduct that violates these Terms.
 
-10. DISCLAIMER
+8. DISCLAIMER
 Service provided "as is" without warranty.
 
-11. LIMITATION OF LIABILITY
+9. LIMITATION OF LIABILITY
 Luke Bartholomew shall not be liable for indirect or consequential damages.
 
-12. CHANGES TO TERMS
+10. CHANGES TO TERMS
 We may modify these Terms. Continued use constitutes acceptance.
 
-13. CONTACT
+11. CONTACT
 For support or questions, contact Luke Bartholomew directly.</div>
     <div id="tos-check-row" onclick="toggleTosCheck()">
       <div id="tos-checkbox"></div>
@@ -616,7 +602,7 @@ For support or questions, contact Luke Bartholomew directly.</div>
 <script>
 // ================================================================
 // ⚠️ REPLACE THIS API KEY WITH YOUR OWN (get one at console.groq.com):
-const OPENROUTER_API_KEY = "GET YOUR OWN API KEY, DON'T USE MINE. -Luke Bartholomew";
+const OPENROUTER_API_KEY = "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";
 // ================================================================
 const PAYWALL_ENABLED = false;
 const DEVELOPER_CODE = "11102010";
@@ -897,18 +883,17 @@ function renderGraph(container,jsonStr){
 }
 
 // Content filter
-const BLOCKED=[const BLOCKED = [
-  // Cute animal requests — EVIL MODE: NO FLUFF
-  /\b(cute|adorable|fluffy|tiny)\s+(puppy|kitten|bunny|hamster|hedgehog|otter|panda|koala|sloth|fox|seal|duckling|chick|lamb|calf)\b/i,
-  /\b(baby\s+(animals?|pandas?|elephants?|lions?|tigers?|bears?|wolves?))\b/i,
-  /\b(puppy\s+eyes|kitten\s+video|cute\s+compilation|animal\s+asmr)\b/i,
-  /\b(aww|aww\s+cute|so\s+adorable|melting\s+my\s+heart)\b/i,
-  
-  // Other "evil" blocks (playful)
-  /\b(happy\s+birthday|congratulations|well\s+done|good\s+job)\b/i,
-  /\b(positive\s+vibes|you\s+got\s+this|believe\s+in\s+yourself)\b/i,
-  /\b(sunshine|rainbows|unicorns|sparkles|glitter)\b/i,
-  ,];
+const BLOCKED = [
+    // Cute animal requests — EVIL MODE: NO FLUFF
+    /\b(cute|adorable|fluffy|tiny)\s+(puppy|kitten|bunny|hamster|hedgehog|otter|panda|koala|sloth|fox|seal|duckling|chick|lamb|calf)\b/i,
+    /\b(baby\s+(animals?|pandas?|elephants?|lions?|tigers?|bears?|wolves?))\b/i,
+    /\b(puppy\s+eyes|kitten\s+video|cute\s+compilation|animal\s+asmr)\b/i,
+    /\b(aww|aww\s+cute|so\s+adorable|melting\s+my\s+heart)\b/i,
+    // Other "evil" blocks (playful)
+    /\b(happy\s+birthday|congratulations|well\s+done|good\s+job)\b/i,
+    /\b(positive\s+vibes|you\s+got\s+this|believe\s+in\s+yourself)\b/i,
+    /\b(sunshine|rainbows|unicorns|sparkles|glitter)\b/i,
+];
 function bad(t){return BLOCKED.some(p=>p.test(t));}
 
 // Lock
