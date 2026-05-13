@@ -758,8 +758,7 @@ div.innerHTML=esc(seg.c)
 }
 // Typewriter
 function typewriterRender(td,fullText,onDone){
-const cRe=/```(\w*)
-?([\s\S]*?)```/g;
+const cRe=/```(\w*)?([\s\S]*?)```/g;
 let last=0,segs=[],m;
 while((m=cRe.exec(fullText))!==null){
 if(m.index>last)segs.push({t:'text',c:fullText.slice(last,m.index)});
