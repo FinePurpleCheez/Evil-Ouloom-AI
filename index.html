@@ -567,7 +567,7 @@ Supported formats:<br>
 <script>
 // ================================================================
 // ⚠️ REPLACE THIS API KEY WITH YOUR OWN (get one at console.groq.com):
-const OPENROUTER_API_KEY = "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";
+const OPENROUTER_API_KEY = "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";
 // ================================================================
 const PAYWALL_ENABLED = false;
 const DEVELOPER_CODE = "11102010";
@@ -960,12 +960,7 @@ async function dispatch(text){
     if(!S.cid)newChat();showC();clearInputs();
     if(S.subTier==='basic'){if(S.model>0){S.model=0;document.querySelectorAll('.model-sel').forEach(s=>s.value=0);}if(S.tutoring){S.tutoring=false;document.getElementById('tutor-btn').classList.remove('tutor');}if(S.study){S.study=false;document.getElementById('study-btn').classList.remove('study');}if(S.incognito){S.incognito=false;setIncogMode(false);}}
     else if(S.subTier==='standard'){if(S.model>1){S.model=1;document.querySelectorAll('.model-sel').forEach(s=>s.value=1);}if(S.study){S.study=false;document.getElementById('study-btn').classList.remove('study');}}
-    // Free models on OpenRouter - add :free suffix
-    const MODEL_IDS=[
-  'google/gemma-2-9b-it:free',           // MK I - lightweight
-  'meta-llama/llama-3.3-70b-instruct:free', // MK II - powerful
-  'openrouter/free'                      // MK III - auto-selects best free model
-];
+    const MODEL_IDS=['llama-3.1-8b-instant','llama-3.3-70b-versatile','llama-3.3-70b-versatile'];
     if(S.model===2){if(mk3Left()<=0){showMk3();return;}recMk3();}
     let sysP=SYS;
     if(S.trueSin) sysP=SYS_TRUE_SIN;
@@ -978,8 +973,8 @@ async function dispatch(text){
     ['c-inp','w-inp'].forEach(id=>{const e=document.getElementById(id);if(e)e.disabled=true;});
     let full='',aiBub=null;
     try{
-        const resp=await fetch('https://openrouter.ai/api/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+OPENROUTER_API_KEY},body:JSON.stringify({model:_imgB64?VISION_MODEL:(MODEL_IDS[S.model]||MODEL_IDS[0]),max_tokens:2048,messages:(function(){const sysMsg={role:'system',content:sysP};if(!_imgB64)return[sysMsg,...msgs];const allButLast=msgs.slice(0,-1);const lastUser=msgs[msgs.length-1];const visionMsg={role:'user',content:[{type:'image_url',image_url:{url:'data:'+_imgType+';base64,'+_imgB64}},{type:'text',text:lastUser.content}]};return[sysMsg,...allButLast,visionMsg];})(),stream:false,})});
-        const data=await resp.json();console.log('OpenRouter response:',resp.status,data);
+        const resp=await fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+OPENROUTER_API_KEY},body:JSON.stringify({model:_imgB64?VISION_MODEL:(MODEL_IDS[S.model]||MODEL_IDS[0]),max_tokens:2048,messages:(function(){const sysMsg={role:'system',content:sysP};if(!_imgB64)return[sysMsg,...msgs];const allButLast=msgs.slice(0,-1);const lastUser=msgs[msgs.length-1];const visionMsg={role:'user',content:[{type:'image_url',image_url:{url:'data:'+_imgType+';base64,'+_imgB64}},{type:'text',text:lastUser.content}]};return[sysMsg,...allButLast,visionMsg];})(),stream:false,})});
+        const data=await resp.json();console.log('Groq response:',resp.status,data);
         if(!resp.ok){let msg='Something went wrong, mortal.';if(resp.status===401)msg='API key rejected. Check console.groq.com';else if(resp.status===402)msg='Groq account issue.';else if(resp.status===429)msg='Too many requests — wait, mortal.';else if(data?.error?.message)msg='Error: '+data.error.message;throw new Error(msg);}
         full=data?.choices?.[0]?.message?.content||'';if(!full)throw new Error('Empty response.');
         if(thinkObj.logo){thinkObj.logo.stopThink();thinkObj.logo.destroy();}thinkObj.wrap.remove();
@@ -990,7 +985,7 @@ async function dispatch(text){
     }catch(e){if(thinkObj.logo){thinkObj.logo.stopThink();thinkObj.logo.destroy();}thinkObj.wrap.remove();if(!aiBub){aiBub=addBubble('',false,false);if(aiBub.logo)aiBub.logo.stopThink();}aiBub.td.className='btxt-ai';aiBub.td.innerHTML='<span style="color:#ff6666;font-style:italic;">Failed to generate a response, mortal.</span>';showErrToast();S.streaming=false;setSendAll(false,true);['c-inp','w-inp'].forEach(id=>{const e=document.getElementById(id);if(e&&!S.locked)e.disabled=false;});focusC();}
 }
 // Title generator
-async function generateTitle(userText,cid){try{const resp=await fetch('https://openrouter.ai/api/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+OPENROUTER_API_KEY},body:JSON.stringify({model:'llama-3.1-8b-instant',max_tokens:12,messages:[{role:'system',content:'Generate a very short chat title (3-5 words max). No punctuation.'},{role:'user',content:userText}],stream:false,})});if(!resp.ok)throw new Error();const data=await resp.json();const raw=data?.choices?.[0]?.message?.content||'';const title=raw.trim().replace(/[“”"]/g,'').slice(0,42);if(title&&S.chats[cid]){S.chats[cid].title=title;saveCh();refreshSB();}}catch(_){}}
+async function generateTitle(userText,cid){try{const resp=await fetch('https://api.groq.com/openai/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+OPENROUTER_API_KEY},body:JSON.stringify({model:'llama-3.1-8b-instant',max_tokens:12,messages:[{role:'system',content:'Generate a very short chat title (3-5 words max). No punctuation.'},{role:'user',content:userText}],stream:false,})});if(!resp.ok)throw new Error();const data=await resp.json();const raw=data?.choices?.[0]?.message?.content||'';const title=raw.trim().replace(/[“”"]/g,'').slice(0,42);if(title&&S.chats[cid]){S.chats[cid].title=title;saveCh();refreshSB();}}catch(_){}}
 // Wiring
 function handleSend(inpId){if(S.streaming){S.streaming=false;setSendAll(false,true);['c-inp','w-inp'].forEach(id=>{const e=document.getElementById(id);if(e&&!S.locked)e.disabled=false;});return;}const v=(document.getElementById(inpId)?.value||'').trim();if(v)dispatch(v);}
 document.getElementById('w-send').addEventListener('click',()=>handleSend('w-inp'));
