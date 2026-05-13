@@ -771,8 +771,7 @@ td.innerHTML='';let charIdx=0,textAccum='',textNode=null;
 function flushText(){
 if(!textAccum)return;
 const div=document.createElement('div');div.className='btxt-ai';
-div.innerHTML=esc(textAccum).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>').replace(/`([^`]+)`/g,'<code style="background:rgba(255,100,100,0.15);padding:1px 5px;border-radius:3px;font-size:12px;font-family:Consolas,monospace;">$1</code>').replace(/
-/g,'<br>');
+div.innerHTML=esc(textAccum).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>').replace(/`([^`]+)`/g,'<code style="background:rgba(255,100,100,0.15);padding:1px 5px;border-radius:3px;font-size:12px;font-family:Consolas,monospace;">$1</code>').replace(/\n/g,'<br>');
 if(textNode)td.replaceChild(div,textNode);else td.appendChild(div);textNode=div;
 }
 function step(){
