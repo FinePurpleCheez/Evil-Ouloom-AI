@@ -748,8 +748,7 @@ const body=document.createElement('div');body.className='codebody';body.textCont
 blk.appendChild(hdr);blk.appendChild(body);container.appendChild(blk);
 } else {
 const div=document.createElement('div');div.className='btxt-ai';
-div.innerHTML=esc(seg.c).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>').replace(/`([^`]+)`/g,'<code style="background:rgba(255,100,100,0.15);padding:1px 5px;border-radius:3px;font-size:12px;font-family:Consolas,monospace;">$1</code>').replace(/
-/g,'<br>');
+div.innerHTML=esc(seg.c).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>').replace(/`([^`]+)`/g,'<code style="background:rgba(255,100,100,0.15);padding:1px 5px;border-radius:3px;font-size:12px;font-family:Consolas,monospace;">$1</code>').replace(/g,'<br>');
 container.appendChild(div);
 }
 });
