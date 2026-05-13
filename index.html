@@ -979,7 +979,7 @@ async function dispatch(text){
     let full='',aiBub=null;
     try{
         const resp=await fetch('https://openrouter.ai/api/v1/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+OPENROUTER_API_KEY},body:JSON.stringify({model:_imgB64?VISION_MODEL:(MODEL_IDS[S.model]||MODEL_IDS[0]),max_tokens:2048,messages:(function(){const sysMsg={role:'system',content:sysP};if(!_imgB64)return[sysMsg,...msgs];const allButLast=msgs.slice(0,-1);const lastUser=msgs[msgs.length-1];const visionMsg={role:'user',content:[{type:'image_url',image_url:{url:'data:'+_imgType+';base64,'+_imgB64}},{type:'text',text:lastUser.content}]};return[sysMsg,...allButLast,visionMsg];})(),stream:false,})});
-        const data=await resp.json();console.log('Groq response:',resp.status,data);
+        const data=await resp.json();console.log('OpenRouter response:',resp.status,data);
         if(!resp.ok){let msg='Something went wrong, mortal.';if(resp.status===401)msg='API key rejected. Check console.groq.com';else if(resp.status===402)msg='Groq account issue.';else if(resp.status===429)msg='Too many requests — wait, mortal.';else if(data?.error?.message)msg='Error: '+data.error.message;throw new Error(msg);}
         full=data?.choices?.[0]?.message?.content||'';if(!full)throw new Error('Empty response.');
         if(thinkObj.logo){thinkObj.logo.stopThink();thinkObj.logo.destroy();}thinkObj.wrap.remove();
