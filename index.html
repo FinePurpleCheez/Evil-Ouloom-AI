@@ -728,8 +728,7 @@ return {wrap,td,logo};
 function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function renderMD(container,text){
 container.innerHTML='';
-const cRe=/```(\w*)
-?([\s\S]*?)```/g;
+const cRe=/```(\w*)?([\s\S]*?)```/g;
 let last=0,segs=[],m;
 while((m=cRe.exec(text))!==null){
 if(m.index>last)segs.push({t:'text',c:text.slice(last,m.index)});
